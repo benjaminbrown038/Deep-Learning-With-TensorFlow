@@ -45,6 +45,7 @@ def fcn32s_vgg16(num_classes,shape):
     x = Activation("relu")(x)
     x = MaxPool2D((2,2),strides = (2,2))(x)
 
+    # convolution block
     x = Conv2D(256,(3,3),padding="same")(model_input)  
     x = Activation("relu")(x)
     x = Conv2D(256,(3,3),padding="same")(x)
@@ -53,6 +54,33 @@ def fcn32s_vgg16(num_classes,shape):
     x = Activation("relu")(x)
     x = MaxPool2D((2,2),strides = (2,2))(x)
 
+    # convolution block 
+    x = Conv2D(512, (3, 3), padding='same')(x)
+    x = Activation('relu')(x)
+    x = Conv2D(512, (3, 3), padding='same')(x)
+    x = Activation('relu')(x)
+    x = Conv2D(512, (3, 3), padding='same')(x)
+    x = Activation('relu')(x)
+    x = MaxPool2D((2, 2), strides=(2, 2))(x)
+
+    # convolution block 
+    x = Conv2D(512, (3, 3), padding='same')(x)
+    x = Activation('relu')(x)
+    x = Conv2D(512, (3, 3), padding='same')(x)
+    x = Activation('relu')(x)
+    x = Conv2D(512, (3, 3), padding='same')(x)
+    x = Activation('relu')(x)
+    x = MaxPool2D((2, 2), strides=(2, 2))(x)
+
+    x = Conv2D(num_classes, (1, 1), padding='same')(x)
+
+    outputs = Conv2DTranspose(num_classes, kernel_size=(64, 64), strides=(32, 32),  padding='same')(x)
+
+    model_output = Activation('softmax')(outputs)
+
+    model = Model(inputs=model_input, outputs=model_output)
+
+    return model 
     
     
 

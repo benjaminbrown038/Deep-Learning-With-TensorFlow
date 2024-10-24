@@ -83,4 +83,26 @@ def fcn32s_vgg16(num_classes,shape):
     model = Model(inputs=model_input, outputs=model_output)
 
     return model
+
+
+def mean_pixel_accuracy():
+
+def mean_iou_naive():
+
+def mean_iou():
+
+def dice_coef_loss():
+
+model.compile()
+
+trained_model = tf.keras.models.load_model(version_dir, 
+                                           custom_objects={'mean_pixel_accuracy':mean_pixel_accuracy, 
+                                                           'mean_iou': mean_iou,
+                                                           'dice_coef_loss':dice_coef_loss})
+
+evaluate = trained_model.evaluate(valid_ds)
+
+print(f"Model evaluation pixel accuracy (Keras):  {evaluate[1]*100.:.3f}")
+print(f"Model evaluation pixel accuracy (custom): {evaluate[2]*100.:.3f}")
+print(f"Model evaluation mean IoU (class-wise):   {evaluate[3]*100.:.3f}")
   
